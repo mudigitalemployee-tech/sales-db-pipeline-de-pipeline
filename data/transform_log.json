@@ -1,0 +1,66 @@
+[
+  {
+    "step": "null_flag_transaction_date",
+    "layer": "silver",
+    "action": "Add null flag for transaction_date",
+    "rows_in": 105,
+    "rows_out": 105,
+    "notes": "Added transaction_date_is_null indicator column"
+  },
+  {
+    "step": "pii_mask_customer_email",
+    "layer": "silver",
+    "action": "SHA256 hash applied to customer_email",
+    "rows_in": 105,
+    "rows_out": 105,
+    "notes": "PII column customer_email hashed for privacy compliance"
+  },
+  {
+    "step": "pii_mask_customer_phone",
+    "layer": "silver",
+    "action": "SHA256 hash applied to customer_phone",
+    "rows_in": 105,
+    "rows_out": 105,
+    "notes": "PII column customer_phone hashed for privacy compliance"
+  },
+  {
+    "step": "pii_mask_product_name",
+    "layer": "silver",
+    "action": "SHA256 hash applied to product_name",
+    "rows_in": 105,
+    "rows_out": 105,
+    "notes": "PII column product_name hashed for privacy compliance"
+  },
+  {
+    "step": "null_flag_status",
+    "layer": "silver",
+    "action": "Add null flag for status",
+    "rows_in": 105,
+    "rows_out": 105,
+    "notes": "Added status_is_null indicator column"
+  },
+  {
+    "step": "clamp_negative_unit_price",
+    "layer": "silver",
+    "action": "Clamp negative values in unit_price to 0",
+    "rows_in": 105,
+    "rows_out": 105,
+    "notes": "10 negative value(s) in unit_price set to 0. Original flagged in unit_price_had_negative."
+  },
+  {
+    "step": "clamp_negative_total_amount",
+    "layer": "silver",
+    "action": "Clamp negative values in total_amount to 0",
+    "rows_in": 105,
+    "rows_out": 105,
+    "notes": "11 negative value(s) in total_amount set to 0. Original flagged in total_amount_had_negative."
+  },
+  {
+    "step": "dedup_silver",
+    "layer": "silver",
+    "action": "Remove duplicate rows",
+    "rows_in": 105,
+    "rows_out": 105,
+    "notes": "Removed 0 duplicate rows in Silver layer"
+  }
+]

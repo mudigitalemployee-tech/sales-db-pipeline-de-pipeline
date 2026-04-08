@@ -1,0 +1,106 @@
+transaction_id,transaction_date,customer_email,customer_phone,product_name,quantity,unit_price,total_amount,status,region,created_at
+1,2026-02-15,customer1@example.com,+1-555-5137,Keyboard,9,908.72,8178.48,cancelled,East,2026-02-05 11:12:30
+2,2026-03-03,customer2@example.com,INVALID,Laptop,9,624.09,5616.81,,West,2026-04-01 11:12:30
+3,2026-01-21,customer3@example.com,+1-555-6152,Headset,10,1022.11,10221.1,refunded,North,2026-02-10 11:12:30
+4,,,+1-555-4207,Keyboard,9,1178.48,10606.32,refunded,East,2026-03-21 11:12:30
+5,2026-02-10,customer5@example.com,+1-555-4912,Headset,2,81.27,162.54,cancelled,Central,2026-01-08 11:12:30
+6,,customer6@example.com,+1-555-5863,Dock Station,1,1051.81,1051.81,cancelled,North,2026-03-04 11:12:30
+7,2026-03-07,customer7@example.com,+1-555-3674,Webcam,8,982.55,7860.4,completed,West,2026-01-08 11:12:30
+8,2026-01-25,customer8@example.com,+1-555-1030,Monitor,9,376.32,3386.88,completed,North,2026-03-20 11:12:30
+9,2026-03-30,customer9@example.com,+1-555-5126,Laptop,10,1272.55,12725.5,refunded,East,2026-03-06 11:12:30
+10,2026-02-18,customer10@example.com,INVALID,Headset,7,1412.87,9890.09,refunded,South,2026-02-18 11:12:30
+11,2026-01-29,customer11@example.com,+1-555-2649,Dock Station,1,1782.54,1782.54,completed,West,2026-03-30 11:12:30
+12,2026-01-19,customer12@example.com,+1-555-6385,Dock Station,9,704.26,6338.34,completed,North,2026-02-18 11:12:30
+13,2026-01-08,customer13@example.com,+1-555-9915,Dock Station,-8,1688.8,-13510.4,cancelled,Central,2026-03-09 11:12:30
+14,2026-01-23,customer14@example.com,+1-555-2202,Dock Station,4,-67.91,-271.64,refunded,Central,2026-01-14 11:12:30
+15,,customer15@example.com,+1-555-5611,Dock Station,4,214.1,856.4,cancelled,North,2026-02-11 11:12:30
+16,2026-03-23,customer16@example.com,INVALID,Keyboard,8,1829.77,14638.16,refunded,Central,2026-03-07 11:12:30
+17,2026-02-07,customer17@example.com,+1-555-8718,Webcam,4,1605.18,6420.72,cancelled,North,2026-02-22 11:12:30
+18,2026-01-26,,+1-555-4411,Laptop,3,1228.07,3684.21,refunded,West,2026-04-02 11:12:30
+19,2026-02-16,customer19@example.com,+1-555-2348,Laptop,9,35.8,322.2,refunded,South,2026-01-21 11:12:30
+20,2026-02-22,customer20@example.com,+1-555-2053,USB Cable,3,1586.36,4759.08,pending,East,2026-03-03 11:12:30
+21,2026-04-07,customer21@example.com,,Headset,8,1542.6,12340.8,pending,West,2026-02-05 11:12:30
+22,2026-02-21,customer22@example.com,+1-555-6624,Keyboard,6,12.1,72.6,refunded,Central,2026-02-04 11:12:30
+23,2026-02-12,customer23@example.com,+1-555-9397,USB Cable,1,718.36,718.36,refunded,North,2026-02-20 11:12:30
+24,2026-03-28,customer24@example.com,INVALID,Headset,4,1944.23,7776.92,pending,North,2026-03-17 11:12:30
+25,2026-02-15,customer25@example.com,+1-555-2445,Monitor,5,1808.52,9042.6,refunded,North,2026-04-01 11:12:30
+26,2026-01-26,,+1-555-3520,Monitor,5,1989.34,9946.7,cancelled,North,2026-02-19 11:12:30
+27,2026-02-22,customer27@example.com,,Laptop,4,763.49,3053.96,cancelled,North,2026-01-29 11:12:30
+28,2026-02-22,customer28@example.com,INVALID,Headset,10,1498.71,14987.1,completed,East,2026-01-17 11:12:30
+29,2026-01-11,customer29@example.com,INVALID,USB Cable,9,1886.94,16982.46,completed,North,2026-03-30 11:12:30
+30,2026-02-09,customer30@example.com,,Laptop,2,1464.84,2929.68,pending,South,2026-02-12 11:12:30
+31,2026-02-05,customer31@example.com,+1-555-1119,USB Cable,9,1452.02,13068.18,refunded,South,2026-03-03 11:12:30
+32,2026-01-09,customer32@example.com,+1-555-4661,Dock Station,5,-154.48,-772.4,refunded,West,2026-02-16 11:12:30
+33,2026-03-07,,,USB Cable,5,-138.13,-690.65,refunded,Central,2026-01-24 11:12:30
+34,2026-02-26,customer34@example.com,+1-555-7850,Headset,3,696.46,2089.38,completed,West,2026-01-23 11:12:30
+35,2026-01-22,,INVALID,Webcam,4,1094.28,4377.12,completed,Central,2026-02-01 11:12:30
+36,2026-01-18,customer36@example.com,+1-555-4670,Laptop,10,958.68,9586.8,refunded,North,2026-01-21 11:12:30
+37,2026-01-27,customer37@example.com,+1-555-5683,Dock Station,6,1114.8,6688.8,completed,Central,2026-01-22 11:12:30
+38,2026-02-27,,+1-555-1488,Laptop,2,412.46,824.92,cancelled,East,2026-03-01 11:12:30
+39,2026-02-09,customer39@example.com,+1-555-6404,Webcam,7,1033.81,7236.67,refunded,East,2026-03-25 11:12:30
+40,2026-02-19,,+1-555-4248,Dock Station,5,263.88,1319.4,completed,West,2026-02-17 11:12:30
+41,2026-02-28,,+1-555-9842,Laptop,3,1553.36,4660.08,refunded,West,2026-01-30 11:12:30
+42,2026-01-26,customer42@example.com,+1-555-2544,Webcam,-3,1670.37,-5011.11,pending,East,2026-03-04 11:12:30
+43,2026-01-18,customer43@example.com,+1-555-1527,Keyboard,6,1783.9,10703.4,cancelled,South,2026-03-28 11:12:30
+44,2026-02-22,customer44@example.com,+1-555-5500,Laptop,8,1187.7,9501.6,pending,East,2026-04-01 11:12:30
+45,2026-01-12,customer45@example.com,+1-555-6903,Monitor,6,170.78,1024.68,pending,East,2026-03-04 11:12:30
+46,2026-03-09,,,USB Cable,6,1833.7,11002.2,cancelled,North,2026-03-08 11:12:30
+47,2026-01-24,customer47@example.com,+1-555-2742,USB Cable,9,537.61,4838.49,pending,South,2026-01-21 11:12:30
+48,2026-01-14,customer48@example.com,+1-555-2230,Mouse,7,405.17,2836.19,cancelled,Central,2026-01-15 11:12:30
+49,2026-01-25,,+1-555-6873,Dock Station,6,466.32,2797.92,refunded,East,2026-02-12 11:12:30
+50,2026-01-29,customer50@example.com,+1-555-5783,Webcam,1,1337.16,1337.16,cancelled,South,2026-03-22 11:12:30
+51,2026-02-03,customer51@example.com,,Webcam,9,1330.83,11977.47,refunded,Central,2026-01-30 11:12:30
+52,2026-03-05,customer52@example.com,INVALID,USB Cable,2,1097.16,2194.32,completed,East,2026-03-11 11:12:30
+53,2026-01-17,customer53@example.com,+1-555-1725,Monitor,4,478.9,1915.6,pending,East,2026-01-10 11:12:30
+54,2026-04-04,customer54@example.com,,Mouse,2,1165.73,2331.46,pending,East,2026-02-06 11:12:30
+55,2026-03-13,customer55@example.com,+1-555-4604,Mouse,3,611.43,1834.29,pending,Central,2026-03-07 11:12:30
+56,2026-02-22,customer56@example.com,+1-555-8833,Headset,8,-80.97,-647.76,refunded,West,2026-01-13 11:12:30
+57,2026-03-29,customer57@example.com,+1-555-3414,Headset,4,1151.68,4606.72,completed,South,2026-02-27 11:12:30
+58,2026-03-26,customer58@example.com,+1-555-7250,USB Cable,6,1436.92,8621.52,refunded,East,2026-03-24 11:12:30
+59,2026-04-08,customer59@example.com,+1-555-9308,Webcam,7,1355.27,9486.89,refunded,West,2026-03-10 11:12:30
+60,2026-02-02,customer60@example.com,,Keyboard,6,727.3,4363.8,completed,East,2026-03-21 11:12:30
+61,2026-03-09,customer61@example.com,+1-555-7540,Keyboard,2,1994.69,3989.38,pending,West,2026-01-27 11:12:30
+62,2026-01-08,customer62@example.com,+1-555-1332,Keyboard,6,370.15,2220.9,refunded,East,2026-02-09 11:12:30
+63,,,,USB Cable,9,1452.48,13072.32,pending,Central,2026-03-31 11:12:30
+64,2026-02-26,customer64@example.com,+1-555-9943,Mouse,6,615.5,3693.0,completed,West,2026-02-05 11:12:30
+65,2026-02-19,,,Dock Station,5,1634.74,8173.7,completed,West,2026-01-11 11:12:30
+66,2026-02-09,customer66@example.com,+1-555-1153,Dock Station,4,1744.19,6976.76,pending,South,2026-03-29 11:12:30
+67,2026-02-11,customer67@example.com,INVALID,Dock Station,8,1316.86,10534.88,pending,North,2026-02-11 11:12:30
+68,2026-02-08,customer68@example.com,+1-555-8214,Keyboard,2,1131.18,2262.36,cancelled,Central,2026-02-28 11:12:30
+69,2026-03-04,,INVALID,Dock Station,10,12.41,124.1,cancelled,West,2026-02-03 11:12:30
+70,2026-02-20,customer70@example.com,+1-555-3916,USB Cable,8,982.66,7861.28,cancelled,East,2026-02-08 11:12:30
+71,2026-03-13,customer71@example.com,+1-555-6055,Laptop,9,478.92,4310.28,pending,Central,2026-01-30 11:12:30
+72,,customer72@example.com,+1-555-3196,USB Cable,9,1376.31,12386.79,pending,West,2026-01-25 11:12:30
+73,,customer73@example.com,INVALID,USB Cable,6,1810.39,10862.34,pending,South,2026-02-26 11:12:30
+74,2026-02-10,customer74@example.com,+1-555-8165,Monitor,4,405.02,1620.08,refunded,North,2026-02-24 11:12:30
+75,2026-03-01,customer75@example.com,+1-555-9664,Keyboard,2,901.22,1802.44,refunded,East,2026-02-12 11:12:30
+76,2026-02-09,customer76@example.com,+1-555-9835,Monitor,5,1174.6,5873.0,cancelled,East,2026-03-02 11:12:30
+77,2026-01-26,customer77@example.com,+1-555-8077,USB Cable,3,912.09,2736.27,refunded,Central,2026-01-27 11:12:30
+78,2026-01-08,customer78@example.com,+1-555-1395,USB Cable,-4,-350.58,1402.32,pending,East,2026-01-21 11:12:30
+79,2026-03-22,customer79@example.com,+1-555-6914,USB Cable,2,1935.17,3870.34,pending,South,2026-03-04 11:12:30
+80,2026-03-29,customer80@example.com,+1-555-1991,Mouse,6,835.2,5011.2,completed,North,2026-02-09 11:12:30
+81,2026-02-07,customer81@example.com,INVALID,Webcam,8,1087.35,8698.8,refunded,South,2026-04-06 11:12:30
+82,2026-01-12,customer82@example.com,+1-555-1171,Monitor,4,727.95,2911.8,pending,South,2026-02-21 11:12:30
+83,2026-03-12,customer83@example.com,+1-555-9492,USB Cable,8,586.7,4693.6,pending,Central,2026-03-18 11:12:30
+84,2026-02-17,customer84@example.com,+1-555-7318,USB Cable,5,-240.23,-1201.15,refunded,West,2026-01-25 11:12:30
+85,2026-02-27,customer85@example.com,+1-555-4260,Dock Station,2,257.77,515.54,refunded,South,2026-04-03 11:12:30
+86,2026-02-08,customer86@example.com,+1-555-6210,Webcam,9,1644.5,14800.5,completed,East,2026-01-10 11:12:30
+87,2026-02-26,customer87@example.com,+1-555-5120,Monitor,1,-30.77,-30.77,pending,South,2026-04-05 11:12:30
+88,2026-02-12,,+1-555-8671,Mouse,10,398.89,3988.9,pending,Central,2026-03-05 11:12:30
+89,2026-03-26,customer89@example.com,+1-555-8534,Dock Station,2,1934.85,3869.7,cancelled,North,2026-01-28 11:12:30
+90,2026-02-12,customer90@example.com,+1-555-2050,Webcam,1,896.67,896.67,cancelled,West,2026-02-15 11:12:30
+91,2026-02-05,customer91@example.com,+1-555-3991,Monitor,2,764.98,1529.96,completed,East,2026-03-23 11:12:30
+92,2026-02-28,customer92@example.com,,Mouse,4,1005.46,4021.84,pending,West,2026-03-26 11:12:30
+93,2026-01-12,,,Dock Station,3,95.02,285.06,pending,South,2026-01-16 11:12:30
+94,2026-03-15,customer94@example.com,+1-555-4747,Keyboard,1,707.72,707.72,completed,Central,2026-03-31 11:12:30
+95,2026-03-11,customer95@example.com,+1-555-3273,Keyboard,1,11.78,11.78,refunded,Central,2026-04-03 11:12:30
+96,2026-02-28,customer96@example.com,+1-555-2194,Headset,4,-297.68,-1190.72,cancelled,West,2026-03-13 11:12:30
+97,2026-01-27,customer97@example.com,+1-555-9028,USB Cable,2,-196.63,-393.26,refunded,South,2026-03-18 11:12:30
+98,2026-02-13,customer98@example.com,+1-555-9059,Mouse,5,500.65,2503.25,completed,North,2026-02-16 11:12:30
+99,2026-04-06,customer99@example.com,+1-555-6434,Mouse,8,119.42,955.36,pending,North,2026-03-06 11:12:30
+100,2026-02-11,,+1-555-5065,USB Cable,6,1273.35,7640.1,pending,East,2026-03-04 11:12:30
+101,2026-01-09,customer32@example.com,+1-555-4661,Dock Station,5,-154.48,-772.4,refunded,West,2026-02-16 11:12:30
+102,2026-03-30,customer9@example.com,+1-555-5126,Laptop,10,1272.55,12725.5,refunded,East,2026-03-06 11:12:30
+103,2026-02-12,customer23@example.com,+1-555-9397,USB Cable,1,718.36,718.36,refunded,North,2026-02-20 11:12:30
+104,2026-02-20,customer70@example.com,+1-555-3916,USB Cable,8,982.66,7861.28,cancelled,East,2026-02-08 11:12:30
+105,2026-03-05,customer52@example.com,INVALID,USB Cable,2,1097.16,2194.32,completed,East,2026-03-11 11:12:30

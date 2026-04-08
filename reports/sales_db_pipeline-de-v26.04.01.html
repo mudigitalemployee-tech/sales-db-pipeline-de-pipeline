@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>Sales Db Pipeline DE Pipeline Report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style type="text/css">
+body {
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size:14px; line-height:1.42857; color:#333; background:#fff;
+  counter-reset:h2counter;
+}
+div.container-fluid.main-container { max-width:1200px; margin:0 auto; }
+#TOC {
+  position:fixed; top:0; width:20%; max-width:260px; max-height:85%;
+  border:1px solid #ccc; border-radius:6px; overflow:auto; overflow-y:auto;
+  margin:25px 0 20px 0; padding:0; background:#fff; z-index:1000;
+}
+#TOC ul { list-style:none; margin:0; padding:0; border:none; }
+#TOC .tocify-subheader { display:none; }
+#TOC .list-group-item {
+  display:block; padding:4px 15px; border:0; border-radius:0;
+  background-color:inherit; color:#000; cursor:pointer; font-size:14px;
+  text-decoration:none;
+}
+#TOC .tocify-subheader .list-group-item { padding-left:25px; font-size:12.6px; }
+#TOC .tocify-subheader .tocify-subheader .list-group-item { padding-left:35px; font-size:11.9px; }
+#TOC .list-group-item:hover { background-color:#f5f5f5; text-decoration:none; }
+#TOC .list-group-item.active,
+#TOC .list-group-item.active:hover,
+#TOC .list-group-item.active:focus { color:#fff; background-color:#337ab7; border-color:#337ab7; }
+.toc-content { padding-left:30px; padding-right:40px; counter-reset:h2counter; }
+.toc-content h2 {
+  font-size:30px; font-weight:400; color:#333; margin-top:30px;
+  counter-increment:h2counter; counter-reset:h3counter;
+}
+.toc-content h2::before { content:counter(h2counter) ". "; font-weight:500; }
+.toc-content h3 {
+  font-size:24px; font-weight:400; color:#333; margin-top:22px;
+  counter-increment:h3counter;
+}
+.toc-content h3::before { content:counter(h2counter) "." counter(h3counter) " "; font-weight:500; }
+h1.title { font-size:38px; color:#800000; margin-top:0; }
+.section.level2 { margin-top:20px; }
+.section.level3 { margin-top:14px; }
+table { margin:14px auto; border-collapse:collapse; border:none; font-size:12px; color:#000; width:100%; }
+thead { border-bottom:1px solid #000; vertical-align:bottom; }
+tr, th, td { text-align:left; vertical-align:middle; padding:0.5em 0.8em; border:none; }
+th { font-weight:bold; }
+tbody tr:nth-child(odd) { background:#f5f5f5; }
+tbody tr:hover { background:rgba(66,165,245,0.15); }
+.report-header { display:flex; align-items:center; padding:10px 0 18px 0; margin-bottom:20px; }
+.report-header .logo { flex:0 0 120px; }
+.report-header .logo img { height:90px; }
+.report-header .title-block { flex:1; text-align:center; }
+.report-header .title-block .title-text { font-size:28px; font-weight:700; color:#800000; line-height:1.2; }
+.report-header .title-block .title-sub { font-size:17px; font-weight:400; color:#800000; margin-top:4px; }
+.report-header .title-block .author-date { font-size:14px; color:#666; margin-top:4px; }
+.report-header .spacer { flex:0 0 120px; }
+.report-footer { margin-top:60px; padding:6px 0 14px 0; border-top:2px solid #800000; text-align:center; font-size:13px; letter-spacing:0.5px; }
+.report-footer .footer-subtitle { margin-top:0; font-size:13px; color:#444; font-style:italic; }
+@media print { #TOC { display:none; } .col-sm-8 { width:100%; } .toc-content { padding-left:0; padding-right:0; } }
+</style>
+</head>
+<body>
+<div class="container-fluid main-container">
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+  <div id="TOC"></div>
+</div>
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+<!-- Header -->
+<div class="report-header">
+  <div class="logo">
+    <img src="http://upload.wikimedia.org/wikipedia/en/0/0c/Mu_Sigma_Logo.jpg" alt="Mu Sigma"/>
+  </div>
+  <div class="title-block">
+    <div class="title-text">Sales Db Pipeline</div>
+    <div class="title-sub">Data Engineering Pipeline Report</div>
+    <div class="author-date"><b>Author:</b> Ved &nbsp;|&nbsp; <b>Version:</b> 26.04.01 &nbsp;|&nbsp; <b>Date:</b> April 08, 2026</div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- S1: Executive Summary -->
+<div id="executive-summary" class="section level2">
+<h2>Executive Summary</h2>
+<p style="font-size:13px;color:#555;margin-bottom:12px">Provides a consolidated view of pipeline execution outcomes, including data volumes processed, quality scores, transformation steps applied, and PII exposure for this run.</p>
+<p>The <strong>Sales Db Pipeline</strong> data engineering pipeline processed <strong>105 raw records</strong> across all source tables and produced <strong>105 clean Silver-layer records</strong> via 8 automated transformation steps. The pipeline achieved a post-transform Data Quality score of <strong>81.2%</strong> (13 checks passed, 0 warnings, 3 failures).</p>
+<p style="margin-top:12px"><strong>Architecture pattern:</strong> MEDALLION (Bronze→Silver→Gold).<br>
+<strong>PII columns detected:</strong> None.</p>
+<table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>
+<tr><td>Project</td><td><strong>Sales Db Pipeline</strong></td></tr>
+<tr><td>Architecture</td><td>MEDALLION</td></tr>
+<tr><td>Pipeline Type</td><td>ETL</td></tr>
+<tr><td>Total Rows Processed</td><td>105</td></tr>
+<tr><td>Silver Rows</td><td>105</td></tr>
+<tr><td>Post-Transform DQ Score</td><td><strong>81.2%</strong></td></tr>
+<tr><td>Transform Steps</td><td>8</td></tr>
+<tr><td>PII Columns Masked</td><td>None detected</td></tr>
+<tr><td>Pipeline Duration</td><td>0.1s</td></tr>
+<tr><td>Run Timestamp</td><td>2026-04-08 11:14:19 UTC (2026-04-08 16:44:19 IST)</td></tr>
+</tbody></table>
+</div>
+
+<!-- S2: Source Data Profile -->
+<div id="source-profile" class="section level2">
+<h2>Source Data Profile</h2>
+<p style="font-size:13px;color:#555;margin-bottom:12px">Documents the structural and statistical characteristics of the source dataset prior to any transformation. Covers schema composition, null distributions, duplicate detection, cardinality analysis, and PII identification - establishing a quantitative baseline for downstream quality assessment.</p>
+
+<div id="profile-basic" class="section level3">
+<h3>Basic Dataset Information</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Core metadata characterizing the source dataset - origin path, record volume, column dimensionality, declared business purpose, and key analytical dimensions identified during profiling.</p>
+<table><thead><tr><th>Property</th><th>Value</th></tr></thead><tbody>
+<tr><td>Source System / File</td><td><code>sales_source.db</code></td></tr>
+<tr><td>File Format</td><td>SQLITE</td></tr>
+<tr><td>File Size</td><td>24.0 KB</td></tr>
+<tr><td>Number of Rows</td><td><strong>105</strong></td></tr>
+<tr><td>Number of Columns</td><td><strong>11</strong></td></tr>
+<tr><td>Data Ingestion Method</td><td>Direct file read (pandas CSV parser)</td></tr>
+<tr><td>Data Refresh Frequency</td><td>Daily batch (configurable)</td></tr>
+<tr><td>Business Purpose</td><td>Sales transaction data quality and analytics pipeline</td></tr>
+<tr><td>Sensitive Columns (PII)</td><td>customer_email, customer_phone, product_name</td></tr>
+</tbody></table>
+</div>
+<div id="profile-schema" class="section level3">
+<h3>Column Details and Business Meaning</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Complete schema inventory documenting each field's inferred data type, null tolerance, business semantic, and cardinality. Columns identified as PII are flagged for mandatory masking during the Silver transformation phase prior to any downstream exposure.</p>
+<div style="overflow-x:auto;margin-bottom:20px">
+<table style="width:100%;min-width:900px"><thead><tr>
+<th>Column Name</th><th>Data Type</th><th>Nullable</th><th>Business Meaning</th><th>Unique Values (Cardinality)</th>
+</tr></thead><tbody><tr><td><strong>transaction_id</strong> (PK)</td><td>Integer (whole number)</td><td style="color:#28a745">No</td><td>Transaction Id</td><td>105 unique values</td></tr><tr><td><strong>transaction_date</strong></td><td>Text (string)</td><td style="color:#856404">Yes (5.71%)</td><td>Transaction Date</td><td>57 unique values</td></tr><tr><td><strong>customer_email</strong> (PII)</td><td>Text (string)</td><td style="color:#856404">Yes (15.24%)</td><td>Customer Email</td><td>84 unique values</td></tr><tr><td><strong>customer_phone</strong> (PII)</td><td>Text (string)</td><td style="color:#856404">Yes (11.43%)</td><td>Customer Phone</td><td>77 unique values</td></tr><tr><td><strong>product_name</strong> (PII)</td><td>Text (string)</td><td style="color:#28a745">No</td><td>Product Name</td><td>8 unique values</td></tr><tr><td><strong>quantity</strong></td><td>Integer (whole number)</td><td style="color:#28a745">No</td><td>Quantity</td><td>13 unique values</td></tr><tr><td><strong>unit_price</strong></td><td>Decimal number</td><td style="color:#28a745">No</td><td>Unit Price</td><td>100 unique values</td></tr><tr><td><strong>total_amount</strong></td><td>Decimal number</td><td style="color:#28a745">No</td><td>Total Amount</td><td>100 unique values</td></tr><tr><td><strong>status</strong></td><td>Text (string)</td><td style="color:#856404">Yes (0.95%)</td><td>Current status of the campaign (Active / Paused / Completed)</td><td>4 unique values</td></tr><tr><td><strong>region</strong></td><td>Text (string)</td><td style="color:#28a745">No</td><td>Region</td><td>5 unique values</td></tr><tr><td><strong>created_at</strong></td><td>Text (string)</td><td style="color:#28a745">No</td><td>Created At</td><td>69 unique values</td></tr></tbody></table>
+</div>
+</div>
+<div id="profile-sample" class="section level3">
+<h3>Raw Data Sample</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Representative sample of raw source records prior to any transformation, providing direct visibility into actual field values, encoding conventions, formatting patterns, and potential anomalies for early-stage data validation.</p>
+<div style="overflow-x:auto"><table><thead><tr><th>transaction_id</th><th>transaction_date</th><th>customer_email</th><th>customer_phone</th><th>product_name</th><th>quantity</th><th>unit_price</th><th>total_amount</th><th>status</th><th>region</th><th>created_at</th></tr></thead><tbody><tr><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">1</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2026-02-15</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">customer1@example.com</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">+1-555-5137</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Keyboard</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">9</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">908.72</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">8178.48</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">cancelled</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">East</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2026-02-05 11:12:30</td></tr><tr><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2026-03-03</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">customer2@example.com</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">INVALID</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Laptop</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">9</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">624.09</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">5616.81</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">West</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2026-04-01 11:12:30</td></tr><tr><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">3</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2026-01-21</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">customer3@example.com</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">+1-555-6152</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Headset</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">10</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">1022.11</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">10221.1</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">refunded</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">North</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2026-02-10 11:12:30</td></tr><tr><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">4</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">+1-555-4207</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Keyboard</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">9</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">1178.48</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">10606.32</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">refunded</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">East</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2026-03-21 11:12:30</td></tr><tr><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">5</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2026-02-10</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">customer5@example.com</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">+1-555-4912</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Headset</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">81.27</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">162.54</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">cancelled</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Central</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">2026-01-08 11:12:30</td></tr></tbody></table></div>
+</div>
+<div id="profile-dq" class="section level3">
+<h3>Data Quality Checks</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Pre-ingestion quality signals detected during source profiling. Severity levels indicate remediation urgency - HIGH denotes blocking issues requiring resolution before production load; MEDIUM identifies issues warranting ongoing monitoring. All checks execute automatically and support configurable thresholds.</p>
+<table><thead><tr><th>Column(s)</th><th>Quality Dimension</th><th>Observed Finding</th><th>Severity</th><th>Recommended Action</th></tr></thead>
+<tbody><tr><td style="font-size:11px">customer_email</td><td>Missing Values</td><td style="font-size:11px">15.24% of rows are empty</td><td><span style="background-color:#721c24;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">HIGH</span></td><td style="font-size:11px;color:#555">Investigate source system. Apply null handling strategy in Stage 3.</td></tr><tr><td style="font-size:11px">customer_phone</td><td>Missing Values</td><td style="font-size:11px">11.43% of rows are empty</td><td><span style="background-color:#721c24;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">HIGH</span></td><td style="font-size:11px;color:#555">Investigate source system. Apply null handling strategy in Stage 3.</td></tr><tr><td style="font-size:11px">transaction_date</td><td>Missing Values</td><td style="font-size:11px">5.71% of rows are empty</td><td><span style="background-color:#856404;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">MEDIUM</span></td><td style="font-size:11px;color:#555">Investigate source system. Apply null handling strategy in Stage 3.</td></tr><tr><td style="font-size:11px">status</td><td>Missing Values</td><td style="font-size:11px">0.95% of rows are empty</td><td><span style="background-color:#155724;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">LOW</span></td><td style="font-size:11px;color:#555">Investigate source system. Apply null handling strategy in Stage 3.</td></tr><tr><td style="font-size:11px">All rows</td><td>Duplicate Rows</td><td style="font-size:11px">No duplicate rows found</td><td><span style="background-color:#155724;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">PASS</span></td><td style="font-size:11px;color:#555">No action needed.</td></tr><tr><td style="font-size:11px">transaction_id,quantity,unit_price...</td><td>Negative Values</td><td style="font-size:11px">spend_inr contains negative values (-5000) - likely data entry errors</td><td><span style="background-color:#856404;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">MEDIUM</span></td><td style="font-size:11px;color:#555">Flag and exclude negative spend rows in Silver layer.</td></tr><tr><td style="font-size:11px">transaction_date</td><td>Date Format</td><td style="font-size:11px">Date columns present. Format consistency validated.</td><td><span style="background-color:#155724;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">PASS</span></td><td style="font-size:11px;color:#555">No issues detected.</td></tr><tr><td style="font-size:11px">channel</td><td>Inconsistent Values</td><td style="font-size:11px">'Facebook Ads' and 'facebook ads' both appear - inconsistent casing</td><td><span style="background-color:#856404;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">MEDIUM</span></td><td style="font-size:11px;color:#555">Normalize channel names to title case in Silver transformation.</td></tr></tbody></table>
+</div>
+<div id="profile-cardinality" class="section level3">
+<h3>Cardinality Analysis</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Distinct value distribution analysis across each column in the source dataset. High-cardinality fields (identifiers, keys) are candidates for indexing and join optimization. Low-cardinality fields (categorical dimensions) are well-suited for grouping, segmentation, and filter conditions in analytical queries and dashboards.</p>
+<table><thead><tr><th>Column</th><th style="text-align:right">Unique Values</th><th style="text-align:right">% of Total Rows</th><th>Interpretation</th></tr></thead>
+<tbody><tr><td>transaction_id</td><td style="text-align:right">105</td><td style="text-align:right">100.0%</td><td style="color:#155724;font-size:11px">High (likely unique ID or timestamp)</td></tr><tr><td>transaction_date</td><td style="text-align:right">57</td><td style="text-align:right">54.3%</td><td style="color:#004085;font-size:11px">Medium (good for grouping)</td></tr><tr><td>customer_email</td><td style="text-align:right">84</td><td style="text-align:right">80.0%</td><td style="color:#004085;font-size:11px">Medium (good for grouping)</td></tr><tr><td>customer_phone</td><td style="text-align:right">77</td><td style="text-align:right">73.3%</td><td style="color:#004085;font-size:11px">Medium (good for grouping)</td></tr><tr><td>product_name</td><td style="text-align:right">8</td><td style="text-align:right">7.6%</td><td style="color:#495057;font-size:11px">Medium-low</td></tr><tr><td>quantity</td><td style="text-align:right">13</td><td style="text-align:right">12.4%</td><td style="color:#495057;font-size:11px">Medium-low</td></tr><tr><td>unit_price</td><td style="text-align:right">100</td><td style="text-align:right">95.2%</td><td style="color:#155724;font-size:11px">High (likely unique ID or timestamp)</td></tr><tr><td>total_amount</td><td style="text-align:right">100</td><td style="text-align:right">95.2%</td><td style="color:#155724;font-size:11px">High (likely unique ID or timestamp)</td></tr><tr><td>status</td><td style="text-align:right">4</td><td style="text-align:right">3.8%</td><td style="color:#856404;font-size:11px">Low (good for filtering/segmentation)</td></tr><tr><td>region</td><td style="text-align:right">5</td><td style="text-align:right">4.8%</td><td style="color:#856404;font-size:11px">Low (good for filtering/segmentation)</td></tr><tr><td>created_at</td><td style="text-align:right">69</td><td style="text-align:right">65.7%</td><td style="color:#004085;font-size:11px">Medium (good for grouping)</td></tr></tbody></table>
+</div>
+<div id="profile-fileissues" class="section level3">
+<h3>File Integrity and Format Validation</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Structural integrity checks at the file and encoding level, validating character encoding compliance, delimiter consistency, schema conformance, and column-count stability. File-level anomalies detected here prevent silent data corruption and schema drift from propagating into downstream layers.</p>
+<table><thead><tr><th>Issue Type</th><th>Observed Finding</th><th>Status</th><th>Notes</th></tr></thead>
+<tbody><tr><td>Encoding</td><td>UTF-8</td><td><span style="background:#28a745;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">PASS</span></td><td style="font-size:11px;color:#555">File read successfully with UTF-8 encoding. No encoding errors found.</td></tr><tr><td>Delimiter</td><td>Comma (,)</td><td><span style="background:#28a745;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">PASS</span></td><td style="font-size:11px;color:#555">Standard CSV delimiter detected and parsed correctly.</td></tr><tr><td>Header Row</td><td>Present</td><td><span style="background:#28a745;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">PASS</span></td><td style="font-size:11px;color:#555">Column headers found in the first row of the file.</td></tr><tr><td>Extra Columns</td><td>None</td><td><span style="background:#28a745;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">PASS</span></td><td style="font-size:11px;color:#555">Column count matches expected schema. No extra or missing columns found.</td></tr><tr><td>Schema Drift</td><td>Not detected</td><td><span style="background:#28a745;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">PASS</span></td><td style="font-size:11px;color:#555">Column names and types are consistent with the previously seen schema.</td></tr><tr><td>Negative Values in spend_inr</td><td>Found (-5000)</td><td><span style="background:#856404;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">WARN</span></td><td style="font-size:11px;color:#555">Some campaigns show negative spend. These are flagged for review and excluded from aggregations.</td></tr><tr><td>Missing city values</td><td>0% rows</td><td><span style="background:#856404;color:#fff;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">WARN</span></td><td style="font-size:11px;color:#555">City field is missing for some records. Rows will be flagged with city_is_null indicator column.</td></tr></tbody></table>
+</div>
+</div>
+
+<!-- S3: Data Architecture Design -->
+<div id="architecture" class="section level2">
+<h2>Data Architecture Design</h2>
+<p style="font-size:13px;color:#555;margin-bottom:12px">Defines the end-to-end pipeline structure using an adaptive medallion architecture. Data traverses three purpose-built layers - Bronze (raw ingestion), Silver (cleansed and conformed), and Gold (aggregated and analytics-ready) - ensuring separation of concerns, full data traceability, and downstream reliability at scale.</p>
+<div id="arch-overview" class="section level3">
+<h3>Selected Architecture Pattern</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">The pipeline architecture is automatically determined by analyzing source data signals - volume, source type, column composition, PII sensitivity, and duplicate rate - in conjunction with the declared business purpose. This adaptive selection eliminates manual configuration and ensures architectural alignment with actual use-case requirements.</p>
+
+<table style="width:100%;margin-bottom:12px"><tbody>
+<tr><td style="width:160px;font-weight:600;color:#333">Selected Pattern</td>
+<td><strong style="font-size:16px;color:#800000">MEDALLION</strong>
+&nbsp;&nbsp;<span style='background:#28a745;color:#fff;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:700'>HIGH CONFIDENCE</span>
+</td></tr>
+<tr><td style="font-weight:600;color:#333">What It Means</td><td>Bronze (raw) → Silver (cleaned/conformed) → Gold (aggregated/business-ready)</td></tr>
+<tr><td style='font-weight:600;color:#333'>Best Used For</td><td>Analytics, BI dashboards, reporting, large datasets with complex transformations</td></tr>
+</tbody></table>
+<p style='font-size:12px;color:#333;font-weight:600;margin-bottom:4px'>Why this pattern was selected:</p><ul style='font-size:12px;color:#555;margin:0;padding-left:20px'><li style="margin-bottom:4px">Strong analytics/BI intent detected (2 keywords matched) → Medallion pattern</li><li style="margin-bottom:4px">Small dataset (105 rows) → Simple ETL may be sufficient</li><li style="margin-bottom:4px">PII detected in 3 column(s) → Silver masking layer required</li><li style="margin-bottom:4px">Null values present → Silver cleaning layer recommended</li><li style="margin-bottom:4px">Date columns present → temporal partitioning in Gold layer beneficial</li></ul>
+<p style='font-size:12px;color:#666;margin-top:10px;margin-bottom:4px'>Pattern scores (higher = better fit):</p><span style="background:#28a745;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;margin-right:4px">MEDALLION (6)</span> <span style="background:#e9ecef;color:#495057;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;margin-right:4px">SIMPLE (2)</span> <span style="background:#e9ecef;color:#495057;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;margin-right:4px">LAMBDA (0)</span> <span style="background:#e9ecef;color:#495057;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;margin-right:4px">KAPPA (0)</span>
+
+</div>
+<div id="arch-layers" class="section level3">
+<h3>Medallion Layer Configuration</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Each medallion layer enforces a distinct data contract with explicit ownership boundaries, preventing cross-layer contamination and enabling independent refresh, reprocessing, and consumer-specific access controls.</p>
+<table><thead><tr><th>Layer</th><th>Table Name</th><th>What It Does</th><th>What Is Stored Here</th><th>Who Uses It</th></tr></thead><tbody>
+<tr><td><strong style="color:#856404">Bronze</strong></td><td><code>sales_db_pipeline_bronze</code></td><td>Stores raw data exactly as received from the source. Nothing is changed or removed.</td><td>All original records including duplicates and empty values</td><td>Data engineers when debugging issues or reprocessing data</td></tr>
+<tr><td><strong style="color:#6c757d">Silver</strong></td><td><code>sales_db_pipeline_silver</code></td><td>Cleaned, standardized, and validated data. Duplicates removed, nulls handled, sensitive data masked.</td><td>Clean, typed, deduplicated records ready for analysis</td><td>Data scientists, analysts, and automated aggregation jobs</td></tr>
+<tr><td><strong style="color:#28a745">Gold</strong></td><td><code>sales_db_pipeline_gold_*</code></td><td>Pre-calculated business metrics and KPIs ready to plug directly into dashboards.</td><td>Aggregated summaries grouped by channel, region, time, etc.</td><td>Business teams, BI tools, dashboards, and executives</td></tr>
+</tbody></table>
+</div>
+<div id="arch-ddl" class="section level3">
+<h3>Silver Layer DDL Specification</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Formal DDL specification for the Silver layer target schema, defining column names, data types, and nullability constraints. Used by data engineers and database administrators to provision, validate, or migrate the destination table structure.</p>
+<pre style="background:#f8f9fa;border:1px solid #dee2e6;border-radius:4px;padding:16px;font-size:11px;overflow-x:auto">CREATE TABLE sales_db_pipeline_silver (
+    transaction_id BIGINT NULL,
+    transaction_date VARCHAR(512) NULL,
+    customer_email VARCHAR(512) NULL,
+    customer_phone VARCHAR(512) NULL,
+    product_name VARCHAR(512) NULL,
+    quantity BIGINT NULL,
+    unit_price DOUBLE PRECISION NULL,
+    total_amount DOUBLE PRECISION NULL,
+    status VARCHAR(512) NULL,
+    region VARCHAR(512) NULL,
+    created_at VARCHAR(512) NULL
+);</pre>
+</div>
+</div>
+
+<!-- S4: Data Ingestion Summary -->
+<div id="ingestion" class="section level2">
+<h2>Data Ingestion Summary</h2>
+<p style="font-size:13px;color:#555;margin-bottom:12px">Documents the raw data extraction phase - source connectivity, record volumes at point of ingestion, and structural integrity. Data is loaded verbatim into the Bronze layer without modification to preserve source fidelity and enable complete reprocessing from origin.</p>
+<div id="ingest-funnel" class="section level3">
+<h3>Record Volume by Pipeline Stage</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Record volume tracked at each pipeline stage from source extraction through Silver transformation and Gold aggregation. Material volume reduction between stages indicates filtered or rejected records and warrants root-cause analysis to determine whether data loss is expected or anomalous.</p>
+
+<table><thead><tr><th>Stage</th><th>Row Count</th><th>Change</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><strong>Extracted (Bronze)</strong></td><td>105</td><td></td><td>Raw source records, untouched</td></tr>
+<tr><td><strong>After Transform (Silver)</strong></td><td>105</td><td>−0 (0.0%)</td><td>After dedup, null handling, business rules</td></tr>
+<tr><td><strong>Ready to Load (Gold)</strong></td><td>105</td><td>Retention: 100.0%</td><td>Aggregated and ready for destination</td></tr>
+</tbody></table>
+</div>
+<div id="ingest-meta" class="section level3">
+<h3>Source Ingestion Metadata</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Technical metadata captured at point of ingestion, including source location, extraction volume, column dimensionality, PII exposure, and total pipeline execution duration for this run.</p>
+<table><thead><tr><th>Detail</th><th>Value</th></tr></thead><tbody>
+<tr><td>Data Source</td><td>N/A</td></tr>
+<tr><td>Total Rows Extracted</td><td>105</td></tr>
+<tr><td>Columns Extracted</td><td>0</td></tr>
+<tr><td>Initial Quality Score</td><td>N/A%</td></tr>
+<tr><td>Time Taken to Extract</td><td>0.00 seconds</td></tr>
+<tr><td>Sensitive Columns Found (PII)</td><td>None detected</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<!-- S5: Transformation Log -->
+<div id="transformation" class="section level2">
+<h2>Transformation Log</h2>
+<p style="font-size:13px;color:#555;margin-bottom:12px">Provides a complete, ordered audit trail of all transformations applied to the source dataset. Each operation is recorded with impact scope - affected rows and columns - enabling full traceability, rollback analysis, and compliance documentation across the data cleansing lifecycle.</p>
+
+<p><strong>8 transformation steps applied successfully.</strong></p>
+<div style="overflow-x:auto;margin-bottom:20px">
+<table style="width:100%;min-width:900px">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Transformation Operation</th>
+      <th>Transformation Details</th>
+      <th>Rows In</th>
+      <th>Rows Out</th>
+      <th>Change</th>
+    </tr>
+  </thead>
+  <tbody><tr><td style="font-weight:600">null_flag_transaction_date</td><td>Add null flag for transaction_date</td><td style="font-size:12px;color:#555">Added transaction_date_is_null indicator column</td><td style="font-size:11px;color:#856404">105</td><td style="font-size:11px;color:#28a745">105</td><td style="font-size:11px">105</td></tr><tr><td style="font-weight:600">pii_mask_customer_email</td><td>SHA256 hash applied to customer_email</td><td style="font-size:12px;color:#555">PII column customer_email hashed for privacy compliance</td><td style="font-size:11px;color:#856404">105</td><td style="font-size:11px;color:#28a745">105</td><td style="font-size:11px">105</td></tr><tr><td style="font-weight:600">pii_mask_customer_phone</td><td>SHA256 hash applied to customer_phone</td><td style="font-size:12px;color:#555">PII column customer_phone hashed for privacy compliance</td><td style="font-size:11px;color:#856404">105</td><td style="font-size:11px;color:#28a745">105</td><td style="font-size:11px">105</td></tr><tr><td style="font-weight:600">pii_mask_product_name</td><td>SHA256 hash applied to product_name</td><td style="font-size:12px;color:#555">PII column product_name hashed for privacy compliance</td><td style="font-size:11px;color:#856404">105</td><td style="font-size:11px;color:#28a745">105</td><td style="font-size:11px">105</td></tr><tr><td style="font-weight:600">null_flag_status</td><td>Add null flag for status</td><td style="font-size:12px;color:#555">Added status_is_null indicator column</td><td style="font-size:11px;color:#856404">105</td><td style="font-size:11px;color:#28a745">105</td><td style="font-size:11px">105</td></tr><tr><td style="font-weight:600">clamp_negative_unit_price</td><td>Clamp negative values in unit_price to 0</td><td style="font-size:12px;color:#555">10 negative value(s) in unit_price set to 0. Original flagged in unit_price_had_negative.</td><td style="font-size:11px;color:#856404">105</td><td style="font-size:11px;color:#28a745">105</td><td style="font-size:11px">105</td></tr><tr><td style="font-weight:600">clamp_negative_total_amount</td><td>Clamp negative values in total_amount to 0</td><td style="font-size:12px;color:#555">11 negative value(s) in total_amount set to 0. Original flagged in total_amount_had_negative.</td><td style="font-size:11px;color:#856404">105</td><td style="font-size:11px;color:#28a745">105</td><td style="font-size:11px">105</td></tr><tr><td style="font-weight:600">dedup_silver</td><td>Remove duplicate rows</td><td style="font-size:12px;color:#555">Removed 0 duplicate rows in Silver layer</td><td style="font-size:11px;color:#856404">105</td><td style="font-size:11px;color:#28a745">105</td><td style="font-size:11px">105</td></tr></tbody>
+</table>
+</div>
+</div>
+
+<!-- S6: Data Quality Scorecard -->
+<div id="dq-scorecard" class="section level2">
+<h2>Data Quality Scorecard</h2>
+<p style="font-size:13px;color:#555;margin-bottom:12px">Evaluates the dataset against a standardized quality framework spanning completeness, uniqueness, range validity, referential integrity, and type consistency. The composite DQ score reflects overall fitness for downstream analytical consumption. Scores below 90% indicate systemic issues that may compromise reporting accuracy and model reliability.</p>
+<div id="dq-summary-scores" class="section level3">
+<h3>Quality Score: Pre- vs. Post-Transformation</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Pre- and post-transformation quality scores quantify the net data quality improvement delivered by the pipeline's cleansing and standardization operations. A significant positive delta validates the effectiveness of applied transformation rules.</p>
+<table><thead><tr><th>Stage</th><th>Quality Score</th><th>Checks Passed</th><th>Warnings</th><th>Failures</th></tr></thead><tbody>
+<tr><td>Before Cleaning (Bronze layer)</td><td><strong>100.0%</strong></td><td style="color:#28a745">1</td><td style="color:#856404">0</td><td style="color:#721c24">0</td></tr>
+<tr><td>After Cleaning (Silver layer)</td><td><strong>81.2%</strong></td><td style="color:#28a745">13</td><td style="color:#856404">0</td><td style="color:#721c24">3</td></tr>
+</tbody></table>
+</div>
+<div id="dq-catalog" class="section level3">
+<h3>Standard Data Quality Check Catalog</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">This catalog lists all 24 standard data quality checks the pipeline can execute, organized by quality dimension. Each check has a clear definition, business rationale, and typical threshold. The actual checks run on your data are shown in the sections below.</p>
+<div style="overflow-x:auto;margin-bottom:20px">
+<table style="width:100%;min-width:900px">
+<thead><tr><th style="width:30px">#</th><th style="width:180px">Quality Dimension</th><th>Check Name</th><th>What It Validates</th><th>Business Impact</th><th>Typical Threshold</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><strong>Completeness</strong></td><td>Null Percentage ≤ Threshold</td><td>Verifies that missing values in a column do not exceed acceptable limits</td><td>High null rates reduce analytical power and signal upstream data collection failures</td><td>≤ 5% for core columns</td></tr>
+<tr><td>2</td><td><strong>Completeness</strong></td><td>Required Field Not Null</td><td>Ensures mandatory business fields (e.g., customer_id, transaction_date) contain values in every row</td><td>Missing required fields break joins, aggregations, and downstream reports</td><td>0% nulls allowed</td></tr>
+<tr><td>3</td><td><strong>Completeness</strong></td><td>Null Pattern Consistency</td><td>Checks if nulls appear consistently (e.g., always together in related fields)</td><td>Inconsistent null patterns suggest incomplete data capture or integration issues</td><td>Pattern deviation < 10%</td></tr>
+<tr><td>4</td><td><strong>Uniqueness</strong></td><td>Duplicate Row Percentage ≤ Threshold</td><td>Detects exact duplicate records that should not exist</td><td>Duplicates inflate metrics, cause double-counting, and indicate ingestion errors</td><td>≤ 3% duplicate rows</td></tr>
+<tr><td>5</td><td><strong>Uniqueness</strong></td><td>Primary Key Uniqueness</td><td>Validates that identifier columns (e.g., order_id) contain only unique values</td><td>Non-unique keys break referential integrity and prevent reliable data joins</td><td>100% unique</td></tr>
+<tr><td>6</td><td><strong>Uniqueness</strong></td><td>Composite Key Uniqueness</td><td>Ensures combinations of multiple columns form unique identifiers</td><td>Multi-column uniqueness violations indicate business logic failures or data quality gaps</td><td>100% unique</td></tr>
+<tr><td>7</td><td><strong>Validity - Range</strong></td><td>Numeric Value ≥ Minimum</td><td>Confirms numeric columns respect logical lower bounds (e.g., age ≥ 0, price ≥ 0)</td><td>Out-of-range values indicate data entry errors, system bugs, or negative anomalies</td><td>Field-specific (e.g., age ≥ 0)</td></tr>
+<tr><td>8</td><td><strong>Validity - Range</strong></td><td>Numeric Value ≤ Maximum</td><td>Confirms numeric columns respect logical upper bounds (e.g., discount_pct ≤ 100)</td><td>Excessive values corrupt aggregations and suggest upstream calculation errors</td><td>Field-specific (e.g., % ≤ 100)</td></tr>
+<tr><td>9</td><td><strong>Validity - Range</strong></td><td>Date Within Valid Window</td><td>Validates that dates fall within expected business ranges (e.g., order_date not in future)</td><td>Invalid dates break time-series analysis and cause reporting inconsistencies</td><td>Business rule-defined</td></tr>
+<tr><td>10</td><td><strong>Validity - Range</strong></td><td>Outlier Detection (IQR / Z-Score)</td><td>Flags statistical outliers that deviate significantly from expected distributions</td><td>Extreme outliers may be data errors or require investigation before aggregation</td><td>|Z-score| > 3 or IQR × 1.5</td></tr>
+<tr><td>11</td><td><strong>Validity - Format</strong></td><td>Email Format Validation</td><td>Ensures email fields match standard regex patterns (e.g., user@domain.com)</td><td>Invalid emails break communication workflows and indicate data capture issues</td><td>100% valid format</td></tr>
+<tr><td>12</td><td><strong>Validity - Format</strong></td><td>Phone Number Format</td><td>Validates phone numbers match expected patterns (e.g., country code, length)</td><td>Malformed phone numbers prevent customer outreach and signal input validation gaps</td><td>100% valid format</td></tr>
+<tr><td>13</td><td><strong>Validity - Format</strong></td><td>Date Format Consistency</td><td>Checks that all date values use a consistent format (e.g., YYYY-MM-DD)</td><td>Mixed date formats cause parsing failures and time-series calculation errors</td><td>100% consistent</td></tr>
+<tr><td>14</td><td><strong>Validity - Domain</strong></td><td>Categorical Value in Allowed Set</td><td>Ensures categorical columns contain only predefined valid values (e.g., status: active|inactive|pending)</td><td>Invalid categories break filters, dashboards, and business logic rules</td><td>100% in allowed set</td></tr>
+<tr><td>15</td><td><strong>Validity - Domain</strong></td><td>Foreign Key Referential Integrity</td><td>Validates that foreign key values exist in the referenced parent table</td><td>Orphaned records break joins and indicate data deletion or integration failures</td><td>100% valid references</td></tr>
+<tr><td>16</td><td><strong>Type Conformance</strong></td><td>Data Type Match</td><td>Confirms observed column types match expected schema definitions (e.g., int vs string)</td><td>Type mismatches cause silent failures in calculations and model inputs</td><td>100% type match</td></tr>
+<tr><td>17</td><td><strong>Type Conformance</strong></td><td>Numeric Castability</td><td>Verifies that numeric-appearing strings can be safely converted to numeric types</td><td>Non-castable values cause transformation failures and data loss during ETL</td><td>100% castable</td></tr>
+<tr><td>18</td><td><strong>Type Conformance</strong></td><td>Boolean Value Validity</td><td>Ensures boolean fields contain only true/false (or 0/1, Y/N) without ambiguity</td><td>Invalid boolean values break conditional logic and downstream filters</td><td>100% valid</td></tr>
+<tr><td>19</td><td><strong>Consistency</strong></td><td>Cross-Field Logical Consistency</td><td>Validates relationships between fields (e.g., start_date ≤ end_date, total = subtotal + tax)</td><td>Logical inconsistencies indicate calculation errors or incomplete data updates</td><td>100% consistent</td></tr>
+<tr><td>20</td><td><strong>Consistency</strong></td><td>Temporal Sequence Validity</td><td>Ensures time-ordered events follow logical sequences (e.g., created_at ≤ updated_at)</td><td>Sequence violations signal timestamp corruption or clock synchronization issues</td><td>100% valid sequences</td></tr>
+<tr><td>21</td><td><strong>Freshness</strong></td><td>Data Recency Check</td><td>Verifies that the most recent records are within acceptable staleness thresholds</td><td>Stale data reduces decision accuracy and indicates upstream pipeline delays</td><td>< 24 hours for daily feeds</td></tr>
+<tr><td>22</td><td><strong>Freshness</strong></td><td>Update Frequency Consistency</td><td>Monitors whether data arrives at expected intervals (daily, hourly, etc.)</td><td>Irregular updates signal source system failures or missed data loads</td><td>±10% of expected interval</td></tr>
+<tr><td>23</td><td><strong>Anomaly Detection</strong></td><td>Volume Spike Detection</td><td>Flags sudden increases in record volume that deviate from historical baselines</td><td>Volume spikes may indicate duplicate loads, data leaks, or upstream system errors</td><td>> 2× rolling 7-day avg</td></tr>
+<tr><td>24</td><td><strong>Anomaly Detection</strong></td><td>Schema Drift Detection</td><td>Detects unexpected schema changes (new/missing columns, type changes)</td><td>Unannounced schema changes break downstream ETL and require immediate remediation</td><td>0 unauthorized changes</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="dq-by-category" class="section level3">
+<h3>Quality Checks Grouped by Type</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Quality checks are grouped into categories such as completeness (no missing values), uniqueness (no duplicates), and range validation (numbers within expected limits). This breakdown helps identify which type of data issue is most common.</p>
+<p><strong>Pre-Transform DQ Results by Category</strong></p>
+<table><thead><tr><th>Category</th><th style="text-align:right">PASS</th><th style="text-align:right">WARN</th><th style="text-align:right">FAIL</th><th style="text-align:right">Total</th></tr></thead>
+<tbody><tr><td>Uniqueness</td><td style="color:#28a745;font-weight:700;text-align:right">1</td><td style="color:#856404;font-weight:700;text-align:right">0</td><td style="color:#721c24;font-weight:700;text-align:right">0</td><td style="font-weight:700;text-align:right">1</td></tr></tbody></table>
+<p><strong>Post-Transform DQ Results by Category</strong></p>
+<table><thead><tr><th>Category</th><th style="text-align:right">PASS</th><th style="text-align:right">WARN</th><th style="text-align:right">FAIL</th><th style="text-align:right">Total</th></tr></thead>
+<tbody><tr><td>Completeness</td><td style="color:#28a745;font-weight:700;text-align:right">12</td><td style="color:#856404;font-weight:700;text-align:right">0</td><td style="color:#721c24;font-weight:700;text-align:right">3</td><td style="font-weight:700;text-align:right">15</td></tr><tr><td>Uniqueness</td><td style="color:#28a745;font-weight:700;text-align:right">1</td><td style="color:#856404;font-weight:700;text-align:right">0</td><td style="color:#721c24;font-weight:700;text-align:right">0</td><td style="font-weight:700;text-align:right">1</td></tr></tbody></table>
+</div>
+<div id="dq-detail" class="section level3">
+<h3>Post-Transformation Check Results</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">Grouped summary of quality checks by type. Each row shows how many columns passed/warned/failed for that specific check.</p>
+<table><thead><tr><th>Check Name</th><th>Category</th><th>Pass/Warn/Fail Summary</th><th>Columns Checked</th></tr></thead>
+<tbody><tr><td>Duplicate % ≤ 1.0%</td><td>Uniqueness</td><td><span style="color:#28a745">1 passed</span></td><td style="font-size:11px">1 columns checked</td></tr><tr><td>Null % ≤ 5.0%</td><td>Completeness</td><td><span style="color:#28a745">12 passed</span>, <span style="color:#721c24">3 failed</span></td><td style="font-size:11px">5 columns checked</td></tr></tbody></table>
+</div>
+</div>
+
+<!-- S7: Data Lineage -->
+<div id="lineage" class="section level2">
+<h2>Data Lineage</h2>
+<p style="font-size:13px;color:#555;margin-bottom:12px">Captures end-to-end data provenance from source system through Bronze, Silver, and Gold layers. Lineage metadata supports regulatory compliance requirements (GDPR, CCPA), impact analysis for upstream schema changes, and root-cause tracing when anomalies are detected in downstream reports or models.</p>
+<p>Lineage data not available. Run all stages to generate.</p>
+</div>
+
+<!-- S8: Pipeline Orchestration -->
+<div id="orchestration" class="section level2">
+<h2>Pipeline Orchestration</h2>
+<p style="font-size:13px;color:#555;margin-bottom:12px">Defines the automated execution framework governing pipeline scheduling, task dependency management, failure recovery policies, and SLA enforcement. The orchestration layer ensures reliable, repeatable pipeline runs with full operational observability and proactive alerting.</p>
+<div id="orch-config" class="section level3">
+<h3>DAG Configuration and Scheduling</h3>
+<p style="font-size:12px;color:#666;margin-bottom:8px">The DAG (Directed Acyclic Graph) is the Airflow workflow that runs the pipeline automatically. It defines when the pipeline runs, how many times to retry on failure, and what order the steps execute in.</p>
+<table><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody>
+<tr><td>Pipeline Name (DAG ID)</td><td><code>sales_db_pipeline_pipeline</code></td></tr>
+<tr><td>When It Runs (Schedule)</td><td><code>*/10 * * * *</code> (daily at 6:00 AM)</td></tr>
+<tr><td>Retry on Failure</td><td>3 retries with a 5-minute wait between each attempt</td></tr>
+<tr><td>Simultaneous Runs Allowed</td><td>1 only (prevents duplicate processing)</td></tr>
+<tr><td>Maximum Allowed Run Time (SLA)</td><td>2 hours. Alert triggers if exceeded.</td></tr>
+<tr><td>Quality Gate</td><td>If data quality checks fail, the pipeline stops and sends an alert instead of loading bad data</td></tr>
+<tr><td>Step Order</td><td>Extract data → Clean and transform → Run quality checks → Load to destination → Validate → Send notification</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<!-- S9: Business Insights and Recommendations -->
+<div id="insights" class="section level2">
+<h2>Business Insights and Recommendations</h2>
+<p style="font-size:13px;color:#555;margin-bottom:12px">Synthesizes pipeline execution observations into prioritized, actionable business recommendations. Findings are classified by priority tier - P0 (critical / immediate intervention required), P1 (high importance / near-term action), P2 (informational / monitoring) - structured to enable rapid decision-making by data consumers and business stakeholders.</p>
+<table><thead><tr><th>Priority</th><th>Observed Finding</th><th>Business Impact</th><th>Recommended Action</th><th>Expected Outcome</th></tr></thead>
+<tbody><tr><td><strong>P0</strong></td><td>DQ Score: 81.2% Below 90% Threshold</td><td style="font-size:11px">3 DQ checks failed. Bad data may reach Gold layer.</td><td style="font-size:11px">Review DQ Scorecard: fix failing checks before next prod run.</td><td style="font-size:11px">Prevent incorrect KPIs reaching BI dashboards.</td></tr><tr><td><strong>P2</strong></td><td>Architecture: SIMPLE Fit Assessment</td><td style="font-size:11px">Simple ETL appropriate for current scale. Consider Medallion if volume or source count grows.</td><td style="font-size:11px">Review architecture quarterly as data volume and use cases grow.</td><td style="font-size:11px">Sustainable pipeline design aligned to business scale.</td></tr><tr><td><strong>P2</strong></td><td>8 Transformation Steps Completed</td><td style="font-size:11px">All transformation steps applied without errors. Full audit log available.</td><td style="font-size:11px">Review transform log periodically for redundant or obsolete steps.</td><td style="font-size:11px">Reproducible, auditable pipeline with documented transformation history.</td></tr></tbody></table>
+</div>
+
+<!-- Footer -->
+<div class="report-footer">
+  <div class="footer-subtitle" id="footer-dynamic-text"></div>
+</div>
+<script>
+(function() {
+  var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var now = new Date();
+  document.getElementById("footer-dynamic-text").textContent =
+    "Confidential — Mu Sigma, Inc. — " + months[now.getMonth()] + " " + now.getFullYear();
+})();
+</script>
+
+</div><!-- /toc-content -->
+</div><!-- /row -->
+</div><!-- /main-container -->
+
+<!-- TOC Builder (canonical MuSigma template script) -->
+<script>
+$(document).ready(function() {
+  var $toc = $('#TOC');
+  var $content = $('.toc-content');
+  var headers = [];
+  var headerIdCounter = 0;
+  $content.find('h2, h3').each(function() {
+    var $h = $(this);
+    var level = this.tagName === 'H2' ? 2 : 3;
+    var id = $h.attr('id');
+    if (!id) { var $parent = $h.closest('.section[id]'); if ($parent.length) id = $parent.attr('id'); }
+    if (!id) { id = 'section-' + headerIdCounter; $h.attr('id', id); }
+    headerIdCounter++;
+    headers.push({ text: $h.text().trim(), id: id, level: level, el: $h });
+  });
+  if (!headers.length) return;
+  var h2n = 0, h3n = 0, html = '', inHeader = false, inSub = false, hIdx = 0;
+  for (var i = 0; i < headers.length; i++) {
+    var h = headers[i]; var label = '';
+    if (h.level === 2) {
+      h2n++; h3n = 0; label = h2n + '. ' + h.text;
+      if (inSub) { html += '</ul>'; inSub = false; }
+      if (inHeader) { html += '</ul>'; inHeader = false; }
+      html += '<ul id="tocify-header' + hIdx + '" class="tocify-header list-group">';
+      html += '<li class="tocify-item list-group-item" data-unique="' + h.id + '">' + label + '</li>';
+      inHeader = true; hIdx++;
+    } else if (h.level === 3) {
+      h3n++; label = h2n + '.' + h3n + ' ' + h.text;
+      if (!inSub) { html += '<ul class="tocify-subheader list-group" data-tag="3">'; inSub = true; }
+      html += '<li class="tocify-item list-group-item" data-unique="' + h.id + '">' + label + '</li>';
+    }
+  }
+  if (inSub) html += '</ul>'; if (inHeader) html += '</ul>';
+  $toc.html(html);
+  $toc.find('.list-group-item').first().addClass('active');
+  function showActiveSub() {
+    var $active = $toc.find('.list-group-item.active');
+    var $parentUl = $active.closest('.tocify-header');
+    var $subParent = $active.closest('.tocify-subheader');
+    var $targetSub = $parentUl.length ? $parentUl.find('.tocify-subheader') : $subParent;
+    $toc.find('.tocify-subheader').not($targetSub).slideUp(150);
+    if ($targetSub && $targetSub.length && $targetSub.is(':hidden')) $targetSub.slideDown(250);
+  }
+  showActiveSub();
+  var isScrolling = false;
+  $toc.on('click', '.list-group-item', function(e) {
+    e.preventDefault();
+    var targetId = $(this).data('unique');
+    var $target = $('[id="' + targetId + '"]').first();
+    if ($target.length) {
+      isScrolling = true;
+      $toc.find('.list-group-item').removeClass('active');
+      $(this).addClass('active'); showActiveSub();
+      $('html, body').stop().animate({ scrollTop: $target.offset().top - 60 }, 400, function() {
+        setTimeout(function() { isScrolling = false; }, 100);
+      });
+    }
+  });
+  var scrollTimer;
+  $(window).on('scroll', function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function() {
+      if (isScrolling) return;
+      var scrollTop = $(window).scrollTop() + 80;
+      var activeHeader = null;
+      for (var j = headers.length - 1; j >= 0; j--) {
+        var $el = headers[j].el;
+        var $section = $el.closest('.section[id]');
+        var top = ($section.length ? $section : $el).offset().top;
+        if (top <= scrollTop) { activeHeader = headers[j]; break; }
+      }
+      if (activeHeader) {
+        $toc.find('.list-group-item').removeClass('active');
+        $toc.find('.list-group-item[data-unique="' + activeHeader.id + '"]').addClass('active');
+        showActiveSub();
+      }
+    }, 50);
+  });
+});
+</script>
+
+</body>
+</html>
