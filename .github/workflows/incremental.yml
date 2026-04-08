@@ -35,29 +35,21 @@ jobs:
           echo "Last run: $LAST_RUN"
           echo "Current time: $NOW"
           
-          # Save to temp file for Python to read
-          echo "$LAST_RUN" > /tmp/last_run_temp.txt
-          
-          # Count new records
-          NEW_COUNT=$(python3 << 'PYTHON'
+          # Create Python script to check new records
+          cat > /tmp/check_new.py << 'EOF'
 import sqlite3
 import sys
 
-try:
-    with open('/tmp/last_run_temp.txt') as f:
-        last_run = f.read().strip()
-    
-    conn = sqlite3.connect('data/sales_source.db')
-    cur = conn.cursor()
-    cur.execute('SELECT COUNT(*) FROM sales_transactions WHERE created_at > ?', (last_run,))
-    count = cur.fetchone()[0]
-    print(count)
-    conn.close()
-except Exception as e:
-    print(f"Error: {e}", file=sys.stderr)
-    print("0")
-PYTHON
-)
+last_run = sys.argv[1]
+conn = sqlite3.connect('data/sales_source.db')
+cur = conn.cursor()
+cur.execute('SELECT COUNT(*) FROM sales_transactions WHERE created_at > ?', (last_run,))
+count = cur.fetchone()[0]
+print(count)
+conn.close()
+EOF
+          
+          NEW_COUNT=$(python3 /tmp/check_new.py "$LAST_RUN")
           
           echo "new_count=$NEW_COUNT" >> $GITHUB_OUTPUT
           echo "now=$NOW" >> $GITHUB_OUTPUT
@@ -69,7 +61,7 @@ PYTHON
             echo "✅ Running pipeline"
             exit 0
           else
-            echo "⏸️  No new data"
+            echo "⏸️ No new data"
             exit 1
           fi
       
@@ -115,5 +107,5 @@ PYTHON
           if [ "${{ steps.check.outputs.new_count }}" -gt "0" ]; then
             echo "✅ ${{ steps.check.outputs.new_count }} records processed"
           else
-            echo "⏸️  No new data"
+            echo "⏸️ No new data"
           fi
