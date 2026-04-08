@@ -35,20 +35,19 @@ jobs:
           echo "Last run: $LAST_RUN"
           echo "Current time: $NOW"
           
-          # Create Python script to check new records
           cat > /tmp/check_new.py << 'ENDPYTHON'
-          import sqlite3
-          import sys
-          
-          last_run = sys.argv[1]
-          conn = sqlite3.connect('data/sales_source.db')
-          cur = conn.cursor()
-          query = 'SELECT COUNT(*) FROM sales_transactions WHERE created_at > ?'
-          cur.execute(query, (last_run,))
-          count = cur.fetchone()[0]
-          print(count)
-          conn.close()
-          ENDPYTHON
+import sqlite3
+import sys
+
+last_run = sys.argv[1]
+conn = sqlite3.connect('data/sales_source.db')
+cur = conn.cursor()
+query = 'SELECT COUNT(*) FROM sales_transactions WHERE created_at > ?'
+cur.execute(query, (last_run,))
+count = cur.fetchone()[0]
+print(count)
+conn.close()
+ENDPYTHON
           
           NEW_COUNT=$(python3 /tmp/check_new.py "$LAST_RUN")
           
@@ -59,17 +58,17 @@ jobs:
           echo "New records: $NEW_COUNT"
           
           if [ "$NEW_COUNT" -gt 0 ]; then
-            echo "✅ Running pipeline"
+            echo "Running pipeline"
             exit 0
           else
-            echo "⏸️ No new data"
+            echo "No new data"
             exit 1
           fi
       
       - name: Run pipeline
         if: steps.check.outputs.new_count > 0
         run: |
-          echo "🚀 Processing ${{ steps.check.outputs.new_count }} records"
+          echo "Processing ${{ steps.check.outputs.new_count }} records"
           
           cd pipeline
           
@@ -106,7 +105,7 @@ jobs:
         if: always()
         run: |
           if [ "${{ steps.check.outputs.new_count }}" -gt "0" ]; then
-            echo "✅ ${{ steps.check.outputs.new_count }} records processed"
+            echo "SUCCESS: ${{ steps.check.outputs.new_count }} records processed"
           else
-            echo "⏸️ No new data"
+            echo "No new data"
           fi
