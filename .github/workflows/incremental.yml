@@ -2,29 +2,28 @@ name: Incremental Pipeline (Every 10 Min)
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Every 10 minutes
-  workflow_dispatch:  # Manual trigger
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
   push:
     branches: [ main ]
     paths:
-      - 'data/sales_source.db'  # Trigger when source data changes
+      - 'data/sales_source.db'
 
 jobs:
   incremental-load:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
       
-      - name: Install dependencies
-        run: |
-          pip install pandas
+      - name: Install deps
+        run: pip install pandas
       
       - name: Check for new data
         id: check
@@ -36,19 +35,22 @@ jobs:
           echo "Last run: $LAST_RUN"
           echo "Current time: $NOW"
           
+          # Save to temp file for Python to read
+          echo "$LAST_RUN" > /tmp/last_run_temp.txt
+          
           # Count new records
           NEW_COUNT=$(python3 << 'PYTHON'
 import sqlite3
 import sys
 
 try:
+    with open('/tmp/last_run_temp.txt') as f:
+        last_run = f.read().strip()
+    
     conn = sqlite3.connect('data/sales_source.db')
     cur = conn.cursor()
-    
-    last_run = "$LAST_RUN"
     cur.execute('SELECT COUNT(*) FROM sales_transactions WHERE created_at > ?', (last_run,))
     count = cur.fetchone()[0]
-    
     print(count)
     conn.close()
 except Exception as e:
@@ -61,38 +63,33 @@ PYTHON
           echo "now=$NOW" >> $GITHUB_OUTPUT
           echo "last_run=$LAST_RUN" >> $GITHUB_OUTPUT
           
-          echo "📊 New records found: $NEW_COUNT"
+          echo "New records: $NEW_COUNT"
           
           if [ "$NEW_COUNT" -gt 0 ]; then
-            echo "✅ Proceeding with incremental load"
+            echo "✅ Running pipeline"
             exit 0
           else
-            echo "⏸️  No new data - skipping pipeline"
+            echo "⏸️  No new data"
             exit 1
           fi
       
-      - name: Run incremental pipeline
+      - name: Run pipeline
         if: steps.check.outputs.new_count > 0
         run: |
-          echo "🚀 Starting incremental load..."
-          echo "   Time window: ${{ steps.check.outputs.last_run }} → ${{ steps.check.outputs.now }}"
-          echo "   Records to process: ${{ steps.check.outputs.new_count }}"
+          echo "🚀 Processing ${{ steps.check.outputs.new_count }} records"
           
           cd pipeline
           
-          # Stage 1: Filter by date
           python3 stage1_understanding.py \
             --project_name sales_incr \
             --source ../data/sales_source.db \
             --table sales_transactions \
-            --purpose "Automated incremental load" \
+            --purpose "Incremental" \
             --start_date "${{ steps.check.outputs.last_run }}" \
             --end_date "${{ steps.check.outputs.now }}"
           
-          # Stage 2: Design
           python3 stage2_design.py --project_name sales_incr
           
-          # Stage 3: Transform and append to target DB
           python3 stage3_build.py \
             --project_name sales_incr \
             --output_db ../data/sales_target.db \
@@ -100,27 +97,23 @@ PYTHON
             --output_table_gold sales_analytics \
             --db_write_mode append \
             --dq_fail_action warn
-          
-          echo "✅ Pipeline complete!"
       
-      - name: Update timestamp and commit
+      - name: Update timestamp
         if: steps.check.outputs.new_count > 0
         run: |
           echo "${{ steps.check.outputs.now }}" > data/last_run.txt
           
           git config user.name "Pipeline Bot"
-          git config user.email "pipeline@bot"
+          git config user.email "bot@pipeline"
           git add data/
-          git commit -m "chore: incremental load - ${{ steps.check.outputs.new_count }} records processed [skip ci]"
+          git commit -m "chore: +${{ steps.check.outputs.new_count }} records [skip ci]"
           git push
       
-      - name: Report results
+      - name: Report
         if: always()
         run: |
           if [ "${{ steps.check.outputs.new_count }}" -gt "0" ]; then
-            echo "✅ SUCCESS"
-            echo "   Records processed: ${{ steps.check.outputs.new_count }}"
-            echo "   Target DB updated: data/sales_target.db"
+            echo "✅ ${{ steps.check.outputs.new_count }} records processed"
           else
-            echo "⏸️  NO NEW DATA - Pipeline skipped"
+            echo "⏸️  No new data"
           fi
